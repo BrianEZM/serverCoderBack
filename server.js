@@ -3,7 +3,7 @@ const fs = require("fs");
 
 const app = express();
 
-const PORT = 8081
+const PORT = process.env.PORT || 8080
 
 const server = app.listen(PORT, () => {
     console.log(`Servidor escuchando al puerto ${server.address().port}`);
@@ -11,7 +11,7 @@ const server = app.listen(PORT, () => {
 server.on('error', error => console.log(`Error en servidor ${error}`));
 
 app.get('/', (req, res) => {
-    res.send('Hola Brrrr')
+    res.send('Hola probando server cloud heroku levantado por gitHub')
 })
 
 app.get('/uno', (req, res) => {
@@ -23,4 +23,3 @@ app.get('/dos', (req, res) => {
 })
 
 
-// process.env.PORT ||
