@@ -3,7 +3,7 @@ const fs = require("fs");
 
 const app = express();
 
-const PORT = process.env.PORT || 8080
+const PORT = 8081
 
 const server = app.listen(PORT, () => {
     console.log(`Servidor escuchando al puerto ${server.address().port}`);
@@ -23,3 +23,4 @@ app.get('/dos', (req, res) => {
 })
 
 
+// process.env.PORT ||
