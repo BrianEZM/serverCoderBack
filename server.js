@@ -39,6 +39,7 @@ class Contenedor {
             let lectura = await fs.promises.readFile(this.fileName, "utf-8")
             let prods = JSON.parse(lectura)
             console.log(prods)
+            document.write(prods)
             }
         catch(err){console.log("ERROR 1 - LECTURA DE FILE");}
     };
