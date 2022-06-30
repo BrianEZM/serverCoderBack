@@ -2,7 +2,6 @@ const express = require("express");
 const fs = require("fs");
 const app = express();
 
-
 class Contenedor {
     constructor(fileName){
         this.fileName = fileName;
@@ -42,7 +41,7 @@ class Contenedor {
             let lectura = await fs.promises.readFile(this.fileName, "utf-8")
             let prods = JSON.parse(lectura)
             let prodRandom = prods.sort(()=> Math.round(Math.random())-1)
-            console.log(prodRandom[1]);
+            return prodRandom[1];
             }
         catch(err){console.log("ERROR 1 - LECTURA DE FILE");}
     };
@@ -50,9 +49,8 @@ class Contenedor {
     async getAll(){
         try {
             let lectura = await fs.promises.readFile(this.fileName, "utf-8")
-            let prods = JSON.parse(lectura)
-            console.log(prods)
-            console.log(lectura);
+            let prods = await JSON.parse(lectura)
+            return prods;
             }
         catch(err){console.log("ERROR 1 - LECTURA DE FILE");}
     };
@@ -86,19 +84,20 @@ const archivo = new Contenedor("producto.txt");
 // archivo.save({producto:"Raqueta Nike",precio:30000,imag:"*"})
 
 app.get('/', (req, res) => {
-    res.send("Home de app para ver productos y mezclar random")
+    res.send("Home de app para ver productos y mezclar random. En nube Heroku.")
 })
 
-app.get('/productos', (req, res) => {
-    res.send(archivo.getAll())
+app.get('/productos', async (req, res) => {
+    let respuesta = await archivo.getAll()
+    res.send(respuesta)
 })
 
-app.get('/random', (req, res) => {
-    res.send(archivo.getRandom())
+app.get('/random', async (req, res) => {
+    let respuestaRandom = await archivo.getRandom()
+    res.send(respuestaRandom)
 })
 
 const PORT = process.env.PORT || 8080
-
 const server = app.listen(PORT, () => {
     console.log(`Servidor escuchando al puerto ${server.address().port}`);
 })
